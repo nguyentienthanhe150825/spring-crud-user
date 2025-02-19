@@ -14,18 +14,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import vn.demojava.dto.request.UserRequestDTO;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
     @PostMapping("/")
-    public String addUser(@RequestBody UserRequestDTO userDTO) {
+    public String addUser(@Valid @RequestBody UserRequestDTO userDTO) {
         return "User added";
     }
 
     @PutMapping("/{userId}")
-    public String updateUser(@PathVariable("userId") int id, @RequestBody UserRequestDTO userDTO) {
+    public String updateUser(@PathVariable("userId") int id, @Valid @RequestBody UserRequestDTO userDTO) {
         System.out.println("Request Update UserId = " + id);
         return "User updated";
     }
@@ -37,7 +39,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}")
-    public String deleteUser(@PathVariable("userId") int id) {
+    public String deleteUser(@Min(1) @PathVariable("userId") int id) {
         System.out.println("Request delete userId = " + id);
 
         return "User deleted";
